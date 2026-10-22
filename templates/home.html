@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %} Детейлинг в Минске{% endblock %}
+
+{% block content %}
+<header class="header">
+    <a class="logo" href="/">DETAIL<span>LAB</span></a>
+    <a class="header-link" href="#services">
+        Наши услуги
+    </a>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="hero-content">
+            <p class="eyebrow">ДЕТЕЙЛИНГ • МИНСК</p>
+
+            <h1>
+                Твой автомобиль. <br>
+                <span>Новый уровень.</span>
+            </h1>
+
+            <p class="hero-description">
+                Профессиональный уход за автомобилем:
+                чистота салона, свежесть и внимание к деталям.
+            </p>
+            <a href="#services" class="button">
+                Выбрать услугу
+                <span>↗</span>
+            </a>
+
+            <p class="hero-note">
+                Работаем с выездом и по предварительной записи.
+            </p>
+        </div>
+
+        <div class="hero-visual">
+            <div class="hero-image"></div>
+            <div class="image-caption">
+                <span>DETAILING SERVICE</span>
+                <span>MINSK / BY</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="services section" id="services">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">ЧТО МЫ ДЕЛАЕМ</p>
+                <h2>Услуги для твоего авто</h2>
+            </div>
+
+            <p class="section-description">
+                Выбери нужную услугу, а мы обсудим детали
+                и подтвердим удобное время.
+            </p>
+        </div>
+
+        <div class="service-grid">
+            {% for service in services %}
+                <article class="service-card">
+                    {% if service.image_url %}
+                        <img
+                            class="service-image"
+                            src="{{ service.image_url }}"
+                            alt="{{ service.title }}"
+                            loading="lazy"
+                        >
+                    {% else %}
+                        <div class="service-placeholder">
+                            <span>DETAILING</span>
+                        </div>
+                    {% endif %}
+
+                    <div class="service-info">
+                        <h3>{{ service.title }}</h3>
+
+                        <p>{{ service.description }}</p>
+
+                        <div class="service-bottom">
+                            <div>
+                                <span class="price-label">СТОИМОСТЬ ОТ</span>
+                                <strong>{{ service.price_from }} BYN</strong>
+                            </div>
+
+                            <a
+                                class="service-link"
+                                href="/booking/?service={{ service.pk }}"
+                                aria-label="Записаться на услугу {{ service.title }}"
+                            >↗</a>
+                        </div>
+                    </div>
+                </article>
+            {% empty %}
+                <p>
+                    Скоро здесь появятся наши услуги.
+                </p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="cta section">
+        <p class="eyebrow">ГОТОВ К ПЕРЕМЕНАМ?</p>
+        <h2>Вернем автомобилю свежесть.</h2>
+        <p>
+            Оставь заявку - уточним состояние автомобиля,
+            стоимость и возможное время обслуживания.
+        </p>
+
+        <a href="/booking/" class="button">
+            Оставить заявку <span>↗</span>
+        </a>
+    </section>
+</main>
+
+<footer class="footer">
+    <a class="logo" href="/">DETAIL<span>LAB</span></a>
+    <p>Детейлинг автомобилей · Минск, Беларусь</p>
+    <p>© {% now "Y" %} DetailLab</p>
+</footer>
+{% endblock %}

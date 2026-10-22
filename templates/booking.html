@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Запись на детейлинг{% endblock %}
+
+{% block content %}
+<header class="header">
+    <a class="logo" href="/">DETAIL<span>LAB</span></a>
+    <a class="header-link" href="/">На главную</a>
+</header>
+
+<main class="booking-page">
+    <p class="eyebrow">ЗАПИСЬ НА ОБСЛУЖИВАНИЕ</p>
+
+    <h1>Позаботимся<br>о твоём <span>авто.</span></h1>
+
+    <p class="hero-description">
+        Заполни форму. Мы уточним детали, согласуем стоимость
+        и подберем удобное время.
+    </p>
+
+    <form method="post" class="booking-form">
+        <input type="hidden" name="telegram_user_id" id="telegram-user-id">
+        <input type="hidden" name="telegram_init_data" id="telegram-init-data">
+        
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+            <div class="form-field">
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+
+                {{ field }}
+
+                {% if field.help_text %}
+                    <small>{{ field.help_text }}</small>
+                {% endif %}
+
+                {% for error in field.errors %}
+                    <p class="field-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="button submit-button">
+            Отправить заявку <span>↗</span>
+        </button>
+
+        <p class="form-note">
+            Отправка заявки не означает автоматического
+            подтверждения времени записи.
+        </p>
+    </form>
+</main>
+{% endblock %}
+
